@@ -1,3 +1,7 @@
 .dashboard {
-    @apply w-full
+    @apply w-full m-10;
+
+    &--swim-lanes{
+        @apply w-full flex items-start
+    }
 }

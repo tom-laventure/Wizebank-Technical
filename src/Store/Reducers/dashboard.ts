@@ -1,23 +1,45 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { SwimLanesType } from '../../Components/Dashboard/SwimLane/SwimLane'
 
 export interface DashboardType {
-	placeholder: string
+	swimLanes: SwimLanesType[]
 }
 
-const initialState = {
-	placeholder: ''
+const initialState: DashboardType = {
+	swimLanes: [
+		{
+			header: 'teams',
+			cards: [
+				{
+					title: 'How to use this board'
+				},
+				{
+					title: 'Product'
+				},
+				{
+					title: 'Marketing'
+				},
+				{
+					title: 'Sales'
+				},
+			]
+		}
+	]
 }
 
 const dashboardSlice = createSlice({
 	name: 'dashboard',
 	initialState,
 	reducers: {
-		placeholder: (state, action: PayloadAction<DashboardType>) => {
-			state.placeholder = action.payload.placeholder
+		setSwimLanes: (state, action: PayloadAction<DashboardType>) => {
+			state.swimLanes = action.payload.swimLanes
+		},
+		addSwimLane: (state, action: PayloadAction<SwimLanesType>) => {
+			state.swimLanes.push(action.payload)
 		}
 	}
 })
 
-export const { placeholder } = dashboardSlice.actions
+export const { setSwimLanes, addSwimLane } = dashboardSlice.actions
 export { initialState as dashboardState }
 export default dashboardSlice.reducer
