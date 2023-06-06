@@ -1,0 +1,11 @@
+.create-card{
+    @apply flex flex-col w-full p-8;
+
+    &--header{
+        @apply text-lg font-semibold pb-4;
+    }
+
+    &--bottom-section{
+        @apply w-full flex justify-end pt-6;
+    }
+}

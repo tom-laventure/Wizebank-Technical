@@ -1,0 +1,11 @@
+.app-button{
+    @apply font-semibold py-1 px-2 rounded;
+
+    &--blue{
+        @apply bg-blue-500 text-white;
+    }
+
+    &--blue:hover {
+        @apply bg-blue-700;
+    }
+}

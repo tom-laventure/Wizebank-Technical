@@ -1,0 +1,7 @@
+.popup{
+    @apply bg-white w-full max-w-md;
+    
+    &--wrapper{
+        @apply absolute w-full h-screen top-0 left-0 flex justify-center items-center;
+    }
+}

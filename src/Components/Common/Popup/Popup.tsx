@@ -7,7 +7,7 @@ interface PopupType {
 
 const Popup = ({ close, children }: PopupType) => {
 	return (
-		<div className={styles["popup--container"]} onClick={close}>
+		<div className={styles["popup--wrapper"]} onClick={close}>
 			<div className={styles["popup"]}>{children}</div>
 		</div>
 	)

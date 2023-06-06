@@ -4,4 +4,8 @@
     &--tags{
         @apply flex
     }
+
+    &--bottom-section {
+        @apply flex justify-end;
+    }
 }
