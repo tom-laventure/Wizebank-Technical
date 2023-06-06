@@ -1,16 +1,20 @@
-import { Ref } from "react"
+import styles from "./AppText.module.scss"
 
 interface TextType {
-	refValue: Ref<HTMLInputElement>
-	label: string
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	name: string
+	value: string
 }
 
-const Text = ({ refValue, label }: TextType) => {
+const Text = ({ onChange, name, value }: TextType) => {
 	return (
-		<>
-			<label>{label}</label>
-			<input type="text" ref={refValue} />
-		</>
+		<input
+			className={styles["app-text"]}
+			type="text"
+			name={name}
+			onChange={(e) => onChange(e)}
+			value={value}
+		/>
 	)
 }
 

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Card, { CardType } from "../Card/Card"
 import styles from "./SwimLane.module.scss"
-import CreateCard from "../../Common/Popup/CreateCard/CreateCard"
+import CreateCard from "../../Common/Popup/Dashboard/CreateCard/CreateCard"
 
 export interface SwimLanesType {
 	header: string
@@ -23,9 +23,7 @@ const SwimLane = ({ header, cards, id }: SwimLanesType) => {
 			<button onClick={() => setCreateCard(true)}>
 				+ Add another card
 			</button>
-			{createCard && (
-				<CreateCard close={() => setCreateCard(false)} />
-			)}
+			{createCard && <CreateCard close={() => undefined} />}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import Popup from "../Popup"
+import Popup from "../../Popup"
 
 interface CreateSwimLaneType {
     close: () => void,

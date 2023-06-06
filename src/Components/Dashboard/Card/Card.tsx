@@ -10,12 +10,12 @@ export interface CardType {
 }
 
 const Card = ({ title, tags, assignees }: CardType) => {
-	console.log(assignees)
+
 	return (
 		<div className={styles["card"]}>
 			<div className={styles["card--tags"]}>
 				{tags?.map((tag, key) => (
-					<Tag label={tag.label} color={tag.color} key={key} />
+					<Tag label={tag.label} key={key} />
 				))}
 			</div>
 			<span>{title}</span>
