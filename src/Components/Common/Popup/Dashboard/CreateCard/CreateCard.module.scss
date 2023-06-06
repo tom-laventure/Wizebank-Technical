@@ -8,8 +8,32 @@
     &--bottom-section{
         @apply w-full flex justify-end pt-6;
     }
+
+    &--input-group{
+        @apply flex flex-col items-end;
+
+        button{
+            @apply mt-1
+        }
+    }
 }
 
-.existing-cards {
-    @apply flex mb-2 mt-1 flex-wrap;
+.existing-tags {
+    @apply flex mt-1 mb-2 flex-wrap;
+
+    button{
+        @apply m-[2px]; 
+    }
+}
+
+.existing-people{
+    @apply flex mt-1 mb-2 flex-wrap;
+
+    &--button{
+        @apply flex mx-1;
+    }
+
+    &--selected {
+        @apply ml-1
+    }
 }

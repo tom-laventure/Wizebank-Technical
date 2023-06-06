@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import Popup from "../../Popup"
 import AppText from "../../../Input/AppText/AppText"
 import styles from "./CreateCard.module.scss"
@@ -9,34 +9,52 @@ import {
 	useAppSelector,
 } from "../../../../../Store/Hooks/useDispatch"
 import Tag, { TagType } from "../../../../Dashboard/Common/Tag/Tag"
-import { createTag } from "../../../../../Store/Reducers/dashboard"
+import {
+	createAssignee,
+	createCard,
+	createTag,
+} from "../../../../../Store/Reducers/dashboard"
 import { COLORS } from "../../../../Constants/COLORS"
-import { PersonType } from "../../../../Dashboard/Common/Person/Person"
+import Person, {
+	PersonType,
+} from "../../../../Dashboard/Common/Person/Person"
+import { CardType } from "../../../../Dashboard/Card/Card"
 
 interface CreateCardType {
 	close: () => void
+	id: number
 }
 
-interface SelectedTags {
+interface GenericObject {
 	[label: string]: boolean
+}
+
+interface ExistingTagsType {
+	selectedTags: GenericObject
+	setSelectedTags: (label: string) => void
+}
+
+interface ExistingPeopleType {
+	selectedPeople: GenericObject
+	setSelectedPeople: (name: string) => void
 }
 
 interface FormStateType {
 	cardTitle: string
 	newTag: string
-	tags: TagType[]
+	tags: GenericObject
 	newPerson: string
-	assignees: PersonType[]
+	assignees: GenericObject
 }
 
-const CreateCard = ({ close }: CreateCardType) => {
+const CreateCard = ({ close, id }: CreateCardType) => {
 	const dispatch = useAppDispatch()
 	const [formState, setFormState] = useState<FormStateType>({
 		cardTitle: "",
 		newTag: "",
-		tags: [],
+		tags: {},
 		newPerson: "",
-		assignees: [],
+		assignees: {},
 	})
 
 	const updateFormState = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -46,26 +64,74 @@ const CreateCard = ({ close }: CreateCardType) => {
 		const { newTag } = formState
 
 		if (newTag) {
-			//TODO allow for color pickerm instead of randomly assigning one
+			//TODO allow for color picker instead of randomly assigning one
 			const color = COLORS[Math.floor(Math.random() * COLORS.length)]
 			dispatch(createTag({ label: newTag, color: color }))
 			setFormState((oldState) => {
-				const { tags } = oldState
-				tags.push({ label: newTag })
+				let { tags } = oldState
+				tags = { ...tags, [newTag]: true }
 				oldState.newTag = ""
 				return { ...oldState, tags }
 			})
 		}
 	}
 
+	const setSelectedTags = (label: string) => {
+		setFormState((oldState) => {
+			const { tags } = oldState
+			tags[label] = !tags[label]
+			return { ...oldState, tags }
+		})
+	}
+
 	const createNewPerson = () => {
-		// const { newTag } = formState
-		// if (newTag) dispatch(createTag({ label: newTag, color: "blue" }))
+		const { newPerson } = formState
+		if (newPerson) {
+			const color = COLORS[Math.floor(Math.random() * COLORS.length)]
+			dispatch(createAssignee({ name: newPerson, color: color }))
+
+			setFormState((oldState) => {
+				let { assignees } = oldState
+				assignees = { ...assignees, [newPerson]: true }
+				oldState.newPerson = ""
+				return { ...oldState, assignees }
+			})
+		}
+	}
+
+	const setSelectedPeople = (name: string) => {
+		setFormState((oldState) => {
+			const { assignees } = oldState
+			assignees[name] = !assignees[name]
+			oldState.newPerson = ""
+			return { ...oldState, assignees }
+		})
 	}
 
 	const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		console.log("here")
+
+		const { cardTitle, assignees, tags } = formState
+
+		const cardAssignees: PersonType[] = Object.keys(assignees).map(
+			(person) => {
+				return { name: person }
+			}
+		)
+
+		const cardTags: TagType[] = Object.keys(tags).map((tag) => {
+			return { label: tag }
+		})
+		if (cardTitle) {
+			const card: CardType = {
+				title: cardTitle,
+				tags: cardTags,
+				assignees: cardAssignees,
+			}
+
+			dispatch(createCard({ card: card, laneId: id }))
+			close()
+		}
 	}
 
 	return (
@@ -86,8 +152,11 @@ const CreateCard = ({ close }: CreateCardType) => {
 					onChange={updateFormState}
 				/>
 				<AppLabel label="Select Card Tags" />
-				<ExistingTags />
-				<div>
+				<ExistingTags
+					selectedTags={formState.tags}
+					setSelectedTags={setSelectedTags}
+				/>
+				<div className={styles["create-card--input-group"]}>
 					<AppText
 						value={formState.newTag}
 						name="newTag"
@@ -96,10 +165,16 @@ const CreateCard = ({ close }: CreateCardType) => {
 					<AppButton
 						label="Create New Tag"
 						click={() => createNewTag()}
+						color="gray"
+						size="sm"
 					/>
 				</div>
 				<AppLabel label="Select Assignees" />
-				<div>
+				<ExistingPeople
+					selectedPeople={formState.assignees}
+					setSelectedPeople={setSelectedPeople}
+				/>
+				<div className={styles["create-card--input-group"]}>
 					<AppText
 						value={formState.newPerson}
 						name="newPerson"
@@ -108,6 +183,8 @@ const CreateCard = ({ close }: CreateCardType) => {
 					<AppButton
 						label="Create New Assignee"
 						click={() => createNewPerson()}
+						color="gray"
+						size="sm"
 					/>
 				</div>
 				<div className={styles["create-card--bottom-section"]}>
@@ -118,26 +195,56 @@ const CreateCard = ({ close }: CreateCardType) => {
 	)
 }
 
-const ExistingTags = () => {
+const ExistingTags = ({
+	selectedTags,
+	setSelectedTags,
+}: ExistingTagsType) => {
 	const existingTags = useAppSelector((state) => state.dashboard.tags)
 	const tagNames = Object.keys(existingTags)
-	const [selectedTags, setSelectedTags] = useState<SelectedTags>({})
-
-	const updateSelectedTags = (tagName: string) => {
-		const tagState = selectedTags[tagName]
-		setSelectedTags({ ...selectedTags, [tagName]: tagState })
-	}
 
 	return (
-		<div className={styles["existing-cards"]}>
+		<div className={styles["existing-tags"]}>
 			{tagNames.map((tag, key) => {
 				return (
-					<Tag
-						label={tag}
+					<button
+						type="button"
+						onClick={() => setSelectedTags(tag)}
 						key={key}
-						selectable
-						tagSelected={() => updateSelectedTags(tag)}
-					/>
+					>
+						<Tag label={tag} selected={selectedTags[tag]} />
+					</button>
+				)
+			})}
+		</div>
+	)
+}
+
+const ExistingPeople = ({
+	selectedPeople,
+	setSelectedPeople,
+}: ExistingPeopleType) => {
+	const existingPeople = useAppSelector(
+		(state) => state.dashboard.assignees
+	)
+	const people = Object.keys(existingPeople)
+
+	return (
+		<div className={styles["existing-people"]}>
+			{people.map((person, key) => {
+				return (
+					<button
+						key={key}
+						onClick={() => setSelectedPeople(person)}
+						className={styles["existing-people--button"]}
+						type="button"
+					>
+						<Person name={person} />
+						{selectedPeople[person] && (
+							<span className={styles["existing-people--selected"]}>
+								x
+							</span>
+						)}
+					</button>
 				)
 			})}
 		</div>

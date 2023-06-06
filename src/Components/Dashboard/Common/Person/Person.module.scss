@@ -1,4 +1,8 @@
 .person{ 
     @apply rounded-full w-6 h-6 flex justify-center items-center;
-    @apply text-white bg-blue-700
+    @apply text-white bg-blue-700;
+
+    &--selected{
+        @apply ml-2;
+    }
 }

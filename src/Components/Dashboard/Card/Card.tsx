@@ -7,10 +7,10 @@ export interface CardType {
 	deleteCard?: (swimLane: number, cardId: number) => void
 	tags?: TagType[]
 	assignees?: PersonType[]
+	laneId?: number
 }
 
 const Card = ({ title, tags, assignees }: CardType) => {
-
 	return (
 		<div className={styles["card"]}>
 			<div className={styles["card--tags"]}>

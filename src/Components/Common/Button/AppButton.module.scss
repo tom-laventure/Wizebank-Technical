@@ -1,5 +1,5 @@
 .app-button{
-    @apply font-semibold py-1 px-2 rounded;
+    @apply font-semibold py-1 px-2 rounded whitespace-nowrap ml-1;
 
     &--blue{
         @apply bg-blue-500 text-white;
@@ -7,5 +7,17 @@
 
     &--blue:hover {
         @apply bg-blue-700;
+    }
+
+    &--gray{
+        @apply bg-gray-500 text-white;
+    }
+
+    &--gray:hover {
+        @apply bg-gray-700;
+    }
+
+    &--sm{
+        @apply text-sm
     }
 }

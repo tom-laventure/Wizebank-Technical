@@ -23,7 +23,9 @@ const SwimLane = ({ header, cards, id }: SwimLanesType) => {
 			<button onClick={() => setCreateCard(true)}>
 				+ Add another card
 			</button>
-			{createCard && <CreateCard close={() => undefined} />}
+			{createCard && (
+				<CreateCard close={() => setCreateCard(false)} id={id!} />
+			)}
 		</div>
 	)
 }
