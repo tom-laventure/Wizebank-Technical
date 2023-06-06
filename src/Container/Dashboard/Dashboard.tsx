@@ -1,9 +1,12 @@
+import { useState } from "react"
 import SwimLane from "../../Components/Dashboard/SwimLane/SwimLane"
 import { useAppSelector } from "../../Store/Hooks/useDispatch"
 import styles from "./Dashboard.module.scss"
+import CreateSwimLane from "../../Components/Common/Popup/Dashboard/CreateSwimLane/CreateSwimLane"
 
 const Dashboard = () => {
 	const { swimLanes } = useAppSelector((state) => state.dashboard)
+	const [createSwimLane, setCreateSwimLane] = useState(false)
 
 	return (
 		<div className={styles["dashboard"]}>
@@ -18,10 +21,16 @@ const Dashboard = () => {
 						/>
 					)
 				})}
-				<button className={styles["dashboard--add-lane"]}>
+				<button
+					className={styles["dashboard--add-lane"]}
+					onClick={() => setCreateSwimLane(true)}
+				>
 					+ Add another swim lane
 				</button>
 			</div>
+			{createSwimLane && (
+				<CreateSwimLane close={() => setCreateSwimLane(false)} />
+			)}
 		</div>
 	)
 }

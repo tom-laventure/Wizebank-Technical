@@ -7,7 +7,7 @@ interface PopupType {
 
 const Popup = ({ close, children }: PopupType) => {
 	return (
-		<div className={styles["popup--wrapper"]}>
+		<div className={styles["popup--wrapper"]} onClick={() => close()}>
 			<div
 				className={styles["popup"]}
 				onClick={(e) => e.stopPropagation()}

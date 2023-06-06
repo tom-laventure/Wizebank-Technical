@@ -1,5 +1,5 @@
 .card{
-    @apply bg-white m-2 min-h-[75px] p-2;
+    @apply bg-white m-2 min-h-[75px] p-2 flex flex-col justify-around;
 
     &--tags{
         @apply flex

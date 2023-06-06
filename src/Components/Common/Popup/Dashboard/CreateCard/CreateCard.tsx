@@ -144,13 +144,14 @@ const CreateCard = ({ close, id }: CreateCardType) => {
 				<span className={styles["create-card--header"]}>
 					Create Card
 				</span>
-				<label></label>
 				<AppLabel label="Card Title" />
-				<AppText
-					value={formState.cardTitle}
-					name="cardTitle"
-					onChange={updateFormState}
-				/>
+				<div className={styles["create-card--input-group__title"]}>
+					<AppText
+						value={formState.cardTitle}
+						name="cardTitle"
+						onChange={updateFormState}
+					/>
+				</div>
 				<AppLabel label="Select Card Tags" />
 				<ExistingTags
 					selectedTags={formState.tags}

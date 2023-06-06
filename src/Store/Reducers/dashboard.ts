@@ -38,7 +38,7 @@ interface CreateCardType {
 const initialState: DashboardType = {
 	swimLanes: [
 		{
-			header: 'teams',
+			header: 'Teams',
 			cards: [
 				{
 					title: 'How to use this board',
@@ -55,7 +55,8 @@ const initialState: DashboardType = {
 					title: 'Sales',
 					tags: [{ label: 'Support' }]
 				},
-			]
+			],
+			id: 0
 		}
 	],
 	tags: {
@@ -70,7 +71,7 @@ const dashboardSlice = createSlice({
 	name: 'dashboard',
 	initialState,
 	reducers: {
-		addSwimLane: (state, action: PayloadAction<SwimLanesType>) => {
+		createSwimLane: (state, action: PayloadAction<SwimLanesType>) => {
 			state.swimLanes = [...state.swimLanes, action.payload];
 		},
 		createTag: (state, action: PayloadAction<CreateTagType>) => {
@@ -88,6 +89,6 @@ const dashboardSlice = createSlice({
 	}
 })
 
-export const { addSwimLane, createTag, createAssignee, createCard } = dashboardSlice.actions
+export const { createSwimLane, createTag, createAssignee, createCard } = dashboardSlice.actions
 export { initialState as dashboardState }
 export default dashboardSlice.reducer

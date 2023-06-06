@@ -15,22 +15,22 @@
         button{
             @apply mt-1
         }
+
+        &__title{
+            @apply mb-6
+        }
     }
 }
 
 .existing-tags {
     @apply flex mt-1 mb-2 flex-wrap;
-
-    button{
-        @apply m-[2px]; 
-    }
 }
 
 .existing-people{
     @apply flex mt-1 mb-2 flex-wrap;
 
     &--button{
-        @apply flex mx-1;
+        @apply flex;
     }
 
     &--selected {

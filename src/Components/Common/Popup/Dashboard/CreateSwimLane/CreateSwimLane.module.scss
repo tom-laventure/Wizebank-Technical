@@ -1,0 +1,11 @@
+.create-lane {
+    @apply flex flex-col w-full p-8;
+
+    &--header{
+        @apply text-lg font-semibold pb-4;
+    }
+
+    &--bottom-section{
+        @apply flex justify-end mt-4
+    }
+}

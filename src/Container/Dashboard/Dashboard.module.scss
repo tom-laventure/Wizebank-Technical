@@ -1,11 +1,11 @@
 .dashboard {
-    @apply w-full p-10 ;
+    @apply w-full p-10 min-h-screen overflow-x-auto;
 
     &--swim-lanes{
-        @apply w-full flex items-start;
+        @apply w-full flex items-start ;
     }
 
     &--add-lane{
-        @apply bg-gray-100 p-3 rounded-md text-white bg-opacity-30
+        @apply bg-gray-100 p-3 rounded-md text-white bg-opacity-30 min-w-[200px] mr-4;
     }
 }

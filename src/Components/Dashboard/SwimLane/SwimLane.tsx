@@ -10,17 +10,20 @@ export interface SwimLanesType {
 }
 
 const SwimLane = ({ header, cards, id }: SwimLanesType) => {
-	const [createCard, setCreateCard] = useState(true)
+	const [createCard, setCreateCard] = useState(false)
 
 	return (
 		<div className={styles["swim-lane"]}>
-			<span>{header}</span>
+			<span className={styles["swim-lane--header"]}>{header}</span>
 			<div>
-				{cards.map((card, key) => {
+				{cards?.map((card, key) => {
 					return <Card key={key} {...card} />
 				})}
 			</div>
-			<button onClick={() => setCreateCard(true)}>
+			<button
+				className={styles["swim-lane--create-card"]}
+				onClick={() => setCreateCard(true)}
+			>
 				+ Add another card
 			</button>
 			{createCard && (
