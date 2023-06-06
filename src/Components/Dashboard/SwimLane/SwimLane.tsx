@@ -1,4 +1,5 @@
 import Card, { CardType } from "../Card/Card"
+import styles from "./SwimLane.module.scss"
 
 export interface SwimLanesType {
 	header: string
@@ -8,11 +9,13 @@ export interface SwimLanesType {
 
 const SwimLane = ({ header, cards, id }: SwimLanesType) => {
 	return (
-		<div>
-			<div>{header}</div>
+		<div className={styles["swim-lane"]}>
+			<span>{header}</span>
 			<div>
 				{cards.map((card, key) => {
-					return <Card key={key} title={card.title} />
+					return (
+						<Card key={key} title={card.title} tags={card.tags} />
+					)
 				})}
 			</div>
 			<button>+ Add another card</button>

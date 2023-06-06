@@ -11,16 +11,20 @@ const initialState: DashboardType = {
 			header: 'teams',
 			cards: [
 				{
-					title: 'How to use this board'
+					title: 'How to use this board',
+					tags: [{color: 'red', label: 'Support'}]
 				},
 				{
-					title: 'Product'
+					title: 'Product',
+					tags: [{color: 'red', label: 'Support'}]
 				},
 				{
-					title: 'Marketing'
+					title: 'Marketing',
+					tags: [{color: 'red', label: 'Support'}]
 				},
 				{
-					title: 'Sales'
+					title: 'Sales',
+					tags: [{color: 'red', label: 'Support'}]
 				},
 			]
 		}

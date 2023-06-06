@@ -1,0 +1,7 @@
+.card{
+    @apply bg-white m-2 min-h-[75px] p-2;
+
+    &--tags{
+        @apply flex
+    }
+}

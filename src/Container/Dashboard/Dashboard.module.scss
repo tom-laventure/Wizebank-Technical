@@ -1,7 +1,11 @@
 .dashboard {
-    @apply w-full m-10;
+    @apply w-full p-10 ;
 
     &--swim-lanes{
-        @apply w-full flex items-start
+        @apply w-full flex items-start;
+    }
+
+    &--add-lane{
+        @apply bg-gray-100 p-3 rounded-md text-white bg-opacity-30
     }
 }
