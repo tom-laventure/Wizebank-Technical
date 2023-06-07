@@ -19,6 +19,7 @@ interface CardComponentType extends CardType {
 	cardId: number
 	deleteCard: () => void
 	moveCard: ({ move, cardIndex, laneIndex }: UpdateCardType) => void
+	copyCard: () => void
 }
 
 const Card = ({
@@ -29,6 +30,7 @@ const Card = ({
 	moveCard,
 	cardId,
 	laneId,
+	copyCard,
 }: CardComponentType) => {
 	return (
 		<div className={styles["card"]}>
@@ -41,6 +43,7 @@ const Card = ({
 			<div className={styles["card--bottom-section"]}>
 				<div className={styles["card--controls"]}>
 					<button onClick={deleteCard}>delete</button>
+					<button onClick={copyCard}>copy</button>
 					<button
 						onClick={() =>
 							moveCard({

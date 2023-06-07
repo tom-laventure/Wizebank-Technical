@@ -30,6 +30,11 @@ export interface UpdateLaneType {
 	index: number
 }
 
+export interface DuplicateCardType {
+	cardIndex: number
+	laneIndex: number
+}
+
 const initialState: DashboardType = {
 	swimLanes: [
 		{
@@ -140,9 +145,25 @@ const dashboardSlice = createSlice({
 			state.swimLanes[index] = toLane;
 			state.swimLanes[x] = fromLane;
 		},
+		duplicateCard: (state, action: PayloadAction<DuplicateCardType>) => {
+			const { laneIndex, cardIndex } = action.payload
+
+			const copyCard = state.swimLanes[laneIndex].cards[cardIndex]
+			state.swimLanes[laneIndex].cards = [...state.swimLanes[laneIndex].cards, copyCard]
+		},
 	}
 })
 
-export const { createSwimLane, createTag, createAssignee, createCard, deleteSwimLane, deleteCard, updateLane, updateCard } = dashboardSlice.actions
+export const {
+	createSwimLane,
+	createTag,
+	createAssignee,
+	createCard,
+	deleteSwimLane,
+	deleteCard,
+	updateLane,
+	updateCard,
+	duplicateCard
+} = dashboardSlice.actions
 export { initialState as dashboardState }
 export default dashboardSlice.reducer

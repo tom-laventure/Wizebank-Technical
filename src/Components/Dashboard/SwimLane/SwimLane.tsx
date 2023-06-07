@@ -3,6 +3,7 @@ import styles from "./SwimLane.module.scss"
 import CreateCard from "../../Common/Popup/Dashboard/CreateCard/CreateCard"
 import { useState } from "react"
 import {
+	DuplicateCardType,
 	UpdateCardType,
 	UpdateLaneType,
 } from "../../../Store/Reducers/dashboard"
@@ -21,6 +22,7 @@ interface SwimLaneComponentType extends SwimLanesType {
 	deleteCard: (laneId: number, cardId: number) => void
 	moveSwimLane: ({ move, index }: UpdateLaneType) => void
 	moveCard: ({ move, laneIndex, cardIndex }: UpdateCardType) => void
+	copyCard: ({ laneIndex, cardIndex }: DuplicateCardType) => void
 }
 
 const SwimLane = ({
@@ -31,6 +33,7 @@ const SwimLane = ({
 	deleteCard,
 	moveCard,
 	moveSwimLane,
+	copyCard,
 }: SwimLaneComponentType) => {
 	const [createCard, setCreateCard] = useState(false)
 
@@ -60,6 +63,9 @@ const SwimLane = ({
 							{...card}
 							deleteCard={() => deleteCard(id, key)}
 							moveCard={moveCard}
+							copyCard={() =>
+								copyCard({ laneIndex: id, cardIndex: key })
+							}
 						/>
 					)
 				})}

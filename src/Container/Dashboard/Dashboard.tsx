@@ -7,10 +7,12 @@ import {
 import styles from "./Dashboard.module.scss"
 import CreateSwimLane from "../../Components/Common/Popup/Dashboard/CreateSwimLane/CreateSwimLane"
 import {
+	DuplicateCardType,
 	UpdateCardType,
 	UpdateLaneType,
 	deleteCard,
 	deleteSwimLane,
+	duplicateCard,
 	updateCard,
 	updateLane,
 } from "../../Store/Reducers/dashboard"
@@ -20,6 +22,7 @@ const Dashboard = () => {
 	const { swimLanes } = useAppSelector((state) => state.dashboard)
 	const [createSwimLane, setCreateSwimLane] = useState(false)
 
+	// instantiating the dispatch functions here to keep components as pure as possible
 	const deleteLaneFun = (id: number) => dispatch(deleteSwimLane(id))
 	const deleteCardFun = (laneId: number, cardId: number) =>
 		dispatch(deleteCard({ laneId, cardId }))
@@ -27,6 +30,8 @@ const Dashboard = () => {
 		dispatch(updateCard({ move, laneIndex, cardIndex }))
 	const moveLane = ({ move, index }: UpdateLaneType) =>
 		dispatch(updateLane({ move, index }))
+	const copyCard = ({ cardIndex, laneIndex }: DuplicateCardType) =>
+		dispatch(duplicateCard({ cardIndex, laneIndex }))
 
 	return (
 		<div className={styles["dashboard"]}>
@@ -42,6 +47,7 @@ const Dashboard = () => {
 							deleteSwimLane={deleteLaneFun}
 							moveCard={moveCard}
 							moveSwimLane={moveLane}
+							copyCard={copyCard}
 						/>
 					)
 				})}
