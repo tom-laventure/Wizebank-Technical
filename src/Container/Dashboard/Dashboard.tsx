@@ -15,7 +15,6 @@ const Dashboard = () => {
 	const dispatch = useAppDispatch()
 	const { swimLanes } = useAppSelector((state) => state.dashboard)
 	const [createSwimLane, setCreateSwimLane] = useState(false)
-	const [createCard, setCreateCard] = useState(false)
 	const deleteLaneFun = (id: number) => dispatch(deleteSwimLane(id))
 	const deleteCardFun = (laneId: number, cardId: number) =>
 		dispatch(deleteCard({ laneId: laneId, cardId: cardId }))
@@ -32,8 +31,6 @@ const Dashboard = () => {
 							cards={swimlane.cards}
 							deleteCard={deleteCardFun}
 							deleteSwimLane={deleteLaneFun}
-							setCreateCard={setCreateCard}
-							createCard={createCard}
 						/>
 					)
 				})}
@@ -47,6 +44,8 @@ const Dashboard = () => {
 			{createSwimLane && (
 				<CreateSwimLane close={() => setCreateSwimLane(false)} />
 			)}
+
+
 		</div>
 	)
 }

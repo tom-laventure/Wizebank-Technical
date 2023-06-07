@@ -2,10 +2,20 @@
     @apply bg-white m-2 min-h-[75px] p-2 flex flex-col justify-around;
 
     &--tags{
-        @apply flex
+        @apply flex flex-wrap;
     }
 
     &--bottom-section {
-        @apply flex justify-end;
+        @apply flex justify-between;
+    }
+
+    &--controls{
+        button{
+            @apply mx-1 text-sm;
+        }
+    }
+
+    &--assignees {
+        @apply flex flex-wrap
     }
 }

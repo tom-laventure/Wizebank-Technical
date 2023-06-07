@@ -1,6 +1,7 @@
 import Card, { CardType } from "../Card/Card"
 import styles from "./SwimLane.module.scss"
 import CreateCard from "../../Common/Popup/Dashboard/CreateCard/CreateCard"
+import { useState } from "react"
 
 //basic swim lane object that will be stored in the state
 export interface SwimLanesType {
@@ -12,8 +13,6 @@ interface SwimLaneComponentType extends SwimLanesType {
 	id: number
 	deleteSwimLane: (id: number) => void
 	deleteCard: (laneId: number, cardId: number) => void
-	setCreateCard: (state: boolean) => void
-	createCard: boolean
 }
 
 const SwimLane = ({
@@ -22,9 +21,9 @@ const SwimLane = ({
 	id,
 	deleteSwimLane,
 	deleteCard,
-	setCreateCard,
-	createCard,
 }: SwimLaneComponentType) => {
+	const [createCard, setCreateCard] = useState(false)
+
 	return (
 		<div className={styles["swim-lane"]}>
 			<div className={styles["swim-lane--top-section"]}>
@@ -38,7 +37,7 @@ const SwimLane = ({
 							key={key}
 							laneId={id}
 							{...card}
-							deleteCard={deleteCard}
+							deleteCard={() => deleteCard(id, key)}
 						/>
 					)
 				})}
@@ -50,7 +49,7 @@ const SwimLane = ({
 				+ Add another card
 			</button>
 			{createCard && (
-				<CreateCard close={() => setCreateCard(false)} id={id!} />
+				<CreateCard close={() => setCreateCard(false)} id={id} />
 			)}
 		</div>
 	)
