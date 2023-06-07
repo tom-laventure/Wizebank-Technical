@@ -41,7 +41,8 @@ const initialState: DashboardType = {
 					assignees: [{ name: 'frank' }]
 				},
 				{
-					title: 'Product'
+					title: 'Product',
+					tags: [{ label: 'Marketing' }]
 				},
 				{
 					title: 'Marketing',
@@ -54,10 +55,13 @@ const initialState: DashboardType = {
 		}
 	],
 	tags: {
-		'Support': 'red'
+		'Support': 'red',
+		'Marketing': 'green'
+
 	},
 	assignees: {
-		'frank': 'blue'
+		'frank': 'blue',
+		'james': 'orange'
 	}
 }
 
