@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SwimLanesType } from '../../Components/Dashboard/SwimLane/SwimLane'
-import { COLORS } from '../../Components/Constants/COLORS'
+import { COLORS } from '../../Constants/COLORS'
 import { CardType } from '../../Components/Dashboard/Card/Card'
-import { MOVEMENT } from '../../Components/Constants/MOVEMENT'
+import { MOVEMENT } from '../../Constants/MOVEMENT'
 
 
 export interface TagColorTypes {

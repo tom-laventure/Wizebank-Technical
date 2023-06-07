@@ -14,7 +14,7 @@ import {
 	createCard,
 	createTag,
 } from "../../../../../Store/Reducers/dashboard"
-import { COLORS } from "../../../../Constants/COLORS"
+import { COLORS } from "../../../../../Constants/COLORS"
 import Person, {
 	PersonType,
 } from "../../../../Dashboard/Common/Person/Person"
