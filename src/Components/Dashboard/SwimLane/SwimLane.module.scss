@@ -2,10 +2,18 @@
     @apply bg-gray-200 w-full max-w-xs mx-2 p-2 min-w-[300px] max-h-[88vh] overflow-y-auto rounded-md;
 
     &--header{
-        @apply font-semibold ml-2;
+        @apply font-semibold;
     }
 
     &--create-card{
         @apply ml-2;
+    }
+
+    &--top-section{
+        @apply flex justify-between mx-2;
+
+        button{
+            @apply text-sm;
+        }
     }
 }

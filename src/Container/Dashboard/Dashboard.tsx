@@ -1,12 +1,24 @@
 import { useState } from "react"
 import SwimLane from "../../Components/Dashboard/SwimLane/SwimLane"
-import { useAppSelector } from "../../Store/Hooks/useDispatch"
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../Store/Hooks/useDispatch"
 import styles from "./Dashboard.module.scss"
 import CreateSwimLane from "../../Components/Common/Popup/Dashboard/CreateSwimLane/CreateSwimLane"
+import {
+	deleteCard,
+	deleteSwimLane,
+} from "../../Store/Reducers/dashboard"
 
 const Dashboard = () => {
+	const dispatch = useAppDispatch()
 	const { swimLanes } = useAppSelector((state) => state.dashboard)
 	const [createSwimLane, setCreateSwimLane] = useState(false)
+	const [createCard, setCreateCard] = useState(false)
+	const deleteLaneFun = (id: number) => dispatch(deleteSwimLane(id))
+	const deleteCardFun = (laneId: number, cardId: number) =>
+		dispatch(deleteCard({ laneId: laneId, cardId: cardId }))
 
 	return (
 		<div className={styles["dashboard"]}>
@@ -18,6 +30,10 @@ const Dashboard = () => {
 							id={key}
 							header={swimlane.header}
 							cards={swimlane.cards}
+							deleteCard={deleteCardFun}
+							deleteSwimLane={deleteLaneFun}
+							setCreateCard={setCreateCard}
+							createCard={createCard}
 						/>
 					)
 				})}

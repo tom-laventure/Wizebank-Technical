@@ -4,13 +4,17 @@ import Tag, { TagType } from "../Common/Tag/Tag"
 
 export interface CardType {
 	title: string
-	deleteCard?: (swimLane: number, cardId: number) => void
 	tags?: TagType[]
 	assignees?: PersonType[]
-	laneId?: number
 }
 
-const Card = ({ title, tags, assignees }: CardType) => {
+interface CardComponentType extends CardType {
+	laneId: number
+	deleteCard: (swimLane: number, cardId: number) => void
+}
+
+const Card = ({ title, tags, assignees, deleteCard }: CardComponentType) => {
+
 	return (
 		<div className={styles["card"]}>
 			<div className={styles["card--tags"]}>

@@ -18,23 +18,6 @@ export interface DashboardType {
 	assignees: AssigneesType
 }
 
-interface CreateTagType {
-	label: string,
-	color: string
-}
-
-
-interface CreateAssigneeType {
-	name: string,
-	color: string
-}
-
-interface CreateCardType {
-	card: CardType,
-	laneId: number
-}
-
-
 const initialState: DashboardType = {
 	swimLanes: [
 		{
@@ -55,8 +38,7 @@ const initialState: DashboardType = {
 					title: 'Sales',
 					tags: [{ label: 'Support' }]
 				},
-			],
-			id: 0
+			]
 		}
 	],
 	tags: {
@@ -74,21 +56,41 @@ const dashboardSlice = createSlice({
 		createSwimLane: (state, action: PayloadAction<SwimLanesType>) => {
 			state.swimLanes = [...state.swimLanes, action.payload];
 		},
-		createTag: (state, action: PayloadAction<CreateTagType>) => {
+		createTag: (state, action: PayloadAction<{
+			label: string,
+			color: string
+		}>) => {
 			const { label, color } = action.payload
 			state.tags = { ...state.tags, [label]: color }
 		},
-		createAssignee: (state, action: PayloadAction<CreateAssigneeType>) => {
+		createAssignee: (state, action: PayloadAction<{
+			name: string,
+			color: string
+		}>) => {
 			const { name, color } = action.payload
 			state.assignees = { ...state.assignees, [name]: color }
 		},
-		createCard: (state, action: PayloadAction<CreateCardType>) => {
+		createCard: (state, action: PayloadAction<{
+			card: CardType,
+			laneId: number
+		}>) => {
 			const { card, laneId } = action.payload
 			state.swimLanes[laneId].cards = [...state.swimLanes[laneId].cards, card]
+		},
+		deleteSwimLane: (state, action: PayloadAction<number>) => {
+			const index = action.payload
+			state.swimLanes = state.swimLanes.filter((_, i) => i !== index);
+		},
+		deleteCard: (state, action: PayloadAction<{
+			laneId: number,
+			cardId: number
+		}>) => {
+			const { laneId, cardId } = action.payload
+			state.swimLanes[laneId].cards = state.swimLanes[laneId].cards.filter((_, i) => i !== cardId);
 		},
 	}
 })
 
-export const { createSwimLane, createTag, createAssignee, createCard } = dashboardSlice.actions
+export const { createSwimLane, createTag, createAssignee, createCard, deleteSwimLane, deleteCard } = dashboardSlice.actions
 export { initialState as dashboardState }
 export default dashboardSlice.reducer
