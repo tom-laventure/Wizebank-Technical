@@ -2,6 +2,12 @@ import Card, { CardType } from "../Card/Card"
 import styles from "./SwimLane.module.scss"
 import CreateCard from "../../Common/Popup/Dashboard/CreateCard/CreateCard"
 import { useState } from "react"
+import {
+	UpdateCardType,
+	UpdateLaneType,
+} from "../../../Store/Reducers/dashboard"
+import IconBxsLeftArrow from "../../../Assets/Arrows/Left"
+import IconBxsRightArrow from "../../../Assets/Arrows/Right"
 
 //basic swim lane object that will be stored in the state
 export interface SwimLanesType {
@@ -13,6 +19,8 @@ interface SwimLaneComponentType extends SwimLanesType {
 	id: number
 	deleteSwimLane: (id: number) => void
 	deleteCard: (laneId: number, cardId: number) => void
+	moveSwimLane: ({ move, index }: UpdateLaneType) => void
+	moveCard: ({ move, laneIndex, cardIndex }: UpdateCardType) => void
 }
 
 const SwimLane = ({
@@ -21,6 +29,8 @@ const SwimLane = ({
 	id,
 	deleteSwimLane,
 	deleteCard,
+	moveCard,
+	moveSwimLane,
 }: SwimLaneComponentType) => {
 	const [createCard, setCreateCard] = useState(false)
 
@@ -28,6 +38,16 @@ const SwimLane = ({
 		<div className={styles["swim-lane"]}>
 			<div className={styles["swim-lane--top-section"]}>
 				<span className={styles["swim-lane--header"]}>{header}</span>
+				<button
+					onClick={() => moveSwimLane({ move: "l", index: id })}
+				>
+					<IconBxsLeftArrow />
+				</button>
+				<button
+					onClick={() => moveSwimLane({ move: "r", index: id })}
+				>
+					<IconBxsRightArrow />
+				</button>
 				<button onClick={() => deleteSwimLane(id)}>delete</button>
 			</div>
 			<div>
@@ -35,9 +55,11 @@ const SwimLane = ({
 					return (
 						<Card
 							key={key}
+							cardId={key}
 							laneId={id}
 							{...card}
 							deleteCard={() => deleteCard(id, key)}
+							moveCard={moveCard}
 						/>
 					)
 				})}

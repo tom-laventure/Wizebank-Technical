@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SwimLanesType } from '../../Components/Dashboard/SwimLane/SwimLane'
 import { COLORS } from '../../Components/Constants/COLORS'
 import { CardType } from '../../Components/Dashboard/Card/Card'
+import { MOVEMENT } from '../../Components/Constants/MOVEMENT'
 
 
 export interface TagColorTypes {
@@ -16,6 +17,17 @@ export interface DashboardType {
 	swimLanes: SwimLanesType[]
 	tags: TagColorTypes,
 	assignees: AssigneesType
+}
+
+export interface UpdateCardType {
+	move: 'u' | 'd' | 'l' | 'r',
+	cardIndex: number
+	laneIndex: number
+}
+
+export interface UpdateLaneType {
+	move: 'l' | 'r',
+	index: number
 }
 
 const initialState: DashboardType = {
@@ -88,9 +100,45 @@ const dashboardSlice = createSlice({
 			const { laneId, cardId } = action.payload
 			state.swimLanes[laneId].cards = state.swimLanes[laneId].cards.filter((_, i) => i !== cardId);
 		},
+		updateCard: (state, action: PayloadAction<UpdateCardType>) => {
+			const { move, laneIndex, cardIndex } = action.payload
+			const x = MOVEMENT[move].x + laneIndex
+			const y = MOVEMENT[move].y + cardIndex
+
+			let fromCard;
+			let toCard;
+			if (x >= state.swimLanes.length ||
+				y >= state.swimLanes[laneIndex].cards.length ||
+				x < 0 || y < 0) return;
+			switch (move) {
+				case 'u':
+				case 'd':
+					fromCard = state.swimLanes[laneIndex].cards[cardIndex];
+					toCard = state.swimLanes[x].cards[y];
+					state.swimLanes[laneIndex].cards[cardIndex] = toCard;
+					state.swimLanes[x].cards[y] = fromCard;
+					break;
+				case 'l':
+				case 'r':
+					fromCard = state.swimLanes[laneIndex].cards.splice(cardIndex, 1);
+					state.swimLanes[x].cards.push(fromCard[0])
+					break;
+			}
+		},
+		updateLane: (state, action: PayloadAction<UpdateLaneType>) => {
+			const { move, index } = action.payload
+			const x = MOVEMENT[move].x + index
+
+			if (x >= state.swimLanes.length ||
+				x < 0) return;
+			const fromLane = state.swimLanes[index];
+			const toLane = state.swimLanes[x];
+			state.swimLanes[index] = toLane;
+			state.swimLanes[x] = fromLane;
+		},
 	}
 })
 
-export const { createSwimLane, createTag, createAssignee, createCard, deleteSwimLane, deleteCard } = dashboardSlice.actions
+export const { createSwimLane, createTag, createAssignee, createCard, deleteSwimLane, deleteCard, updateLane, updateCard } = dashboardSlice.actions
 export { initialState as dashboardState }
 export default dashboardSlice.reducer
