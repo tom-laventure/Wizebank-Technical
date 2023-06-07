@@ -30,7 +30,7 @@ const CreateSwimLane = ({ close }: CreateSwimLaneType) => {
 
 		if (swimLaneHeader) {
 			dispatch(createSwimLane({ header: swimLaneHeader, cards: [] }))
-            close()
+			close()
 		}
 	}
 
@@ -41,7 +41,7 @@ const CreateSwimLane = ({ close }: CreateSwimLaneType) => {
 				onSubmit={(e) => formSubmit(e)}
 			>
 				<span className={styles["create-lane--header"]}>
-					Create SwimLane
+					Create Swim Lane
 				</span>
 				<AppLabel label="Swim Lane Title" />
 				<AppText

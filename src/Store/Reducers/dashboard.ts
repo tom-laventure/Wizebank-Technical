@@ -5,18 +5,15 @@ import { CardType } from '../../Components/Dashboard/Card/Card'
 import { MOVEMENT } from '../../Constants/MOVEMENT'
 
 
-export interface TagColorTypes {
+export interface ColorObjectType {
 	[key: string]: typeof COLORS[number]
 }
 
-export interface AssigneesType {
-	[key: string]: typeof COLORS[number]
-}
 
 export interface DashboardType {
 	swimLanes: SwimLanesType[]
-	tags: TagColorTypes,
-	assignees: AssigneesType
+	tags: ColorObjectType,
+	assignees: ColorObjectType
 }
 
 export interface UpdateCardType {

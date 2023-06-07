@@ -54,7 +54,7 @@ const SwimLane = ({
 				<button onClick={() => deleteSwimLane(id)}>delete</button>
 			</div>
 			<div>
-				{cards?.map((card, key) => {
+				{cards.map((card, key) => {
 					return (
 						<Card
 							key={key}
